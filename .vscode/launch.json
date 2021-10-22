@@ -26,7 +26,40 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'multisig'",
+            "name": "Debug executable 'multisig' propose-spl-transfer",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=multisig",
+                    "--package=cli"
+                ],
+                "filter": {
+                    "name": "multisig",
+                    "kind": "bin"
+                }
+            },
+            "args": [
+                "--cluster",
+                "https://marinade.rpcpool.com",
+                "propose-spl-token-transfer",
+                "--multisig-address",
+                "9aN4drMhmd8AX3eRdYvH1gbZiPmwgGJfjvneCECF97HD",
+                "--amount",
+                "1",
+                "--from",
+                "GR1LBT4cU89cJWE74CP6BsJTf2kriQ9TX59tbDsfxgSi",
+                "--to",
+                "6B49yXqggMcyf2JhWadKwoGGQB9DfgvNa2h6p6ZSoYXN",
+                "--auth",
+                "9cBg3Ankxf4ijde8tjRKAGix5EGRbASnvigUA3JW8WSu",
+                "-o"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'multisig' propose-binary-transaction",
             "cargo": {
                 "args": [
                     "build",

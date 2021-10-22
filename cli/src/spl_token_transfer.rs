@@ -67,11 +67,12 @@ pub fn propose_spl_token_transfer(program: Program, args: SplTokenTransferOption
     } else if to_account.owner == system_program::ID {
         // compute ATA
         destination = spl_associated_token_account::get_associated_token_address(
-            &program.payer(),
+            &args.to.as_pubkey(),
             &from_account.mint,
         );
+        println!("Destination ATA is {}", destination);
         // try read from chain
-        let try_read_to_account: Result<TokenAccount, _> = program.account(args.from.as_pubkey());
+        let try_read_to_account: Result<TokenAccount, _> = program.account(destination);
         // if ata do not exists
         if try_read_to_account.is_err() {
             // Create the ATA
@@ -79,19 +80,16 @@ pub fn propose_spl_token_transfer(program: Program, args: SplTokenTransferOption
                 "Creating Associated Token address of {}: {}",
                 &args.to, destination
             );
-            let tx: NativeTransaction = NativeTransaction::new_with_payer(
-                &[
+            program
+                .request()
+                .instruction(
                     spl_associated_token_account::create_associated_token_account(
                         &program.payer(),
-                        &program.payer(),
+                        &args.to.as_pubkey(),
                         &from_account.mint,
                     ),
-                ],
-                Some(&program.payer()),
-            );
-            program
-                .rpc()
-                .send_and_confirm_transaction(&tx)
+                )
+                .send()
                 .expect("can not create ATA account");
         } else {
             let to_account = try_read_to_account.unwrap();
