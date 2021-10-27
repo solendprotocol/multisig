@@ -2,8 +2,7 @@ use std::sync::Arc;
 
 use crate::input_pubkey::InputPubkey;
 use anchor_client::solana_sdk::{
-    pubkey::Pubkey, signature::Keypair, system_program,
-    transaction::Transaction as NativeTransaction,
+    pubkey::Pubkey, signature::Keypair, system_program
 };
 use anchor_client::Program;
 use anchor_spl::token::{Mint, TokenAccount};
