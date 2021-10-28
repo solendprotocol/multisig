@@ -23,11 +23,11 @@ pub struct SplTokenTransferOptions {
     to: InputPubkey,
 
     /// source account authority
-    #[clap(short = 'a', long)]
+    #[clap(long)]
     auth: InputPubkey,
 
     /// token amount as a decimal number (f64)
-    #[clap(short = 'u', long = "amount")]
+    #[clap(short = 'a', long = "amount")]
     amount_units: f64,
 
     /// do not create a transaction, only output base64 transaction
